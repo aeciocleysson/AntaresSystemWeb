@@ -1,0 +1,36 @@
+﻿@page "/editar-cargo/{id}"
+
+<h3>Atualizar Cargo</h3>
+
+<EditForm Model="cargo" OnValidSubmit="EditCargo">
+    <DataAnnotationsValidator />
+    <div class="form-group mb-3">
+        <label for="descricao">Descrição</label>
+        <InputText @bind-Value="cargo.Descricao" class="form-control" id="descricao" />
+        <ValidationMessage For="() => cargo.Descricao" />
+    </div>
+
+    <button class="btn btn-success" type="submit">Salvar</button>
+</EditForm>
+
+@code {
+    CargoViewModel cargo = new();
+
+    [Parameter]
+    public string id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        cargo = await _cargoService.Select(Convert.ToInt32(id));
+    }
+
+    public async Task EditCargo()
+    {
+        var response = await _cargoService.Update(cargo);
+
+        if (response is not null)
+        {
+            _navigationManager.NavigateTo("/cargos");
+        }
+    }
+}

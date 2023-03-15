@@ -1,0 +1,10 @@
+﻿<AuthorizeView>
+    <Authorized>
+        <a href="Identity/Account/Manage">Olá, @context.User.Identity?.Name!</a>
+    </Authorized>
+    <NotAuthorized>
+        <NavLink class="nav-link" href="Identity/Account/Register">
+            Cadastre-se
+        </NavLink>
+    </NotAuthorized>
+</AuthorizeView>

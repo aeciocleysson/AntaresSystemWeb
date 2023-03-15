@@ -1,0 +1,30 @@
+﻿@page "/adicionar-cargo"
+@using System.Security.Claims;
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<h3>Criar Cargo</h3>
+
+<EditForm Model="cargo" OnValidSubmit="AdicionaCargo">
+    <DataAnnotationsValidator />
+    <div class="form-group mb-3">
+        <label for="descricao">Descrição</label>
+        <InputText @bind-Value="cargo.Descricao" class="form-control" id="descricao" />
+        <ValidationMessage For="() => cargo.Descricao" />
+    </div>
+
+    <button class="btn btn-success" type="submit">Salvar</button>
+</EditForm>
+
+@code {
+    CargoViewModel cargo = new();
+
+    public async Task AdicionaCargo()
+    {
+        var response = await _cargoService.Insert(cargo);
+
+        if(response is not null)
+        {
+            _navigationManager.NavigateTo("/cargos");
+        }
+    }
+}
