@@ -1,0 +1,32 @@
+﻿@page "/adicionar-funcionario"
+
+<h3>Adicionar Funcionario</h3>
+
+<EditForm Model="funcionario" OnValidSubmit="AdicionaFuncionario">
+    <DataAnnotationsValidator />
+    <div class="form-group mb-3">
+        <label for="nome">Nome</label>
+        <InputText @bind-Value="funcionario.Nome" class="form-control" id="descricao" />
+        <ValidationMessage For="() => funcionario.Nome" />
+
+        <label for="nome">Nome</label>
+        <InputText @bind-Value="funcionario.Nome" class="form-control" id="descricao" />
+        <ValidationMessage For="() => funcionario.Nome" />
+    </div>
+
+    <button class="btn btn-success" type="submit">Salvar</button>
+</EditForm>
+
+@code {
+    FuncionarioViewModel funcionario = new();
+
+    public async Task AdicionaFuncionario()
+    {
+        var response = await _funcionarioService.Insert(funcionario);
+
+        if (response is not null)
+        {
+            _navigationManager.NavigateTo("/funcionarios");
+        }
+    }
+}

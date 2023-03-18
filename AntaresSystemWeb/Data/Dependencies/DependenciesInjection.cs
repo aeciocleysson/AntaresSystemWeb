@@ -14,8 +14,10 @@ namespace AntaresSystemWeb.Data.Dependencies
         public static IServiceCollection AddDependencies(this IServiceCollection service, IConfiguration configuration)
         {
             service.AddScoped<ICargoRepository, CargoRepository>();
+            service.AddScoped<IFuncionarioRepository, FuncionarioRepository>();
 
             service.AddScoped<ICargoService, CargoService>();
+            service.AddScoped<IFuncionarioService, FuncionarioService>();
 
             service.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             service.AddScoped<AuthenticatedUser>();
@@ -23,6 +25,7 @@ namespace AntaresSystemWeb.Data.Dependencies
             #region Validation
 
             service.AddTransient<IValidator<CargoViewModel>, CargoValidation>();
+            service.AddTransient<IValidator<FuncionarioViewModel>, FuncionarioValidation>();
 
             #endregion Validation
 
