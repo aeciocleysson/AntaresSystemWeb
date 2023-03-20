@@ -4,14 +4,22 @@
 
 <EditForm Model="funcionario" OnValidSubmit="AdicionaFuncionario">
     <DataAnnotationsValidator />
-    <div class="form-group mb-3">
-        <label for="nome">Nome</label>
-        <InputText @bind-Value="funcionario.Nome" class="form-control" id="descricao" />
-        <ValidationMessage For="() => funcionario.Nome" />
-
-        <label for="nome">Nome</label>
-        <InputText @bind-Value="funcionario.Nome" class="form-control" id="descricao" />
-        <ValidationMessage For="() => funcionario.Nome" />
+    <div class="row">
+        <div class="col">
+            <label for="nome">Nome</label>
+            <InputText @bind-Value="funcionario.Nome" class="form-control" id="descricao" />
+            <ValidationMessage For="() => funcionario.Nome" />
+        </div>
+        <div class="col">
+            <label for="nome">Cargo</label>
+            <select class="form-select" aria-label="Default select example">
+                <option value="0" selected>Selecione...</option>
+                @foreach (var item in cargos)
+                {
+                    <option value="@item.Id">@item.Descricao</option>
+                }
+            </select>
+        </div>
     </div>
 
     <button class="btn btn-success" type="submit">Salvar</button>
@@ -19,6 +27,12 @@
 
 @code {
     FuncionarioViewModel funcionario = new();
+    List<CargoViewModel> cargos = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        cargos = await _cargoService.Select();   
+    }
 
     public async Task AdicionaFuncionario()
     {
