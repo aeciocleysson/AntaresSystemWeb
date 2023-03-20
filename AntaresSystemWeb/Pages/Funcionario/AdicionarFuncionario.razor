@@ -11,6 +11,11 @@
             <ValidationMessage For="() => funcionario.Nome" />
         </div>
         <div class="col">
+            <label for="datanascimento">Data Nascimento</label>
+            <InputDate @bind-Value="funcionario.DataNascimento" class="form-control" id="datanascimento" />
+            <ValidationMessage For="() => funcionario.DataNascimento" />
+        </div>
+        <div class="col">
             <label for="nome">Cargo</label>
             <select class="form-select" aria-label="Default select example">
                 <option value="0" selected>Selecione...</option>
@@ -21,7 +26,7 @@
             </select>
         </div>
     </div>
-
+    <br />
     <button class="btn btn-success" type="submit">Salvar</button>
 </EditForm>
 
@@ -29,9 +34,13 @@
     FuncionarioViewModel funcionario = new();
     List<CargoViewModel> cargos = new();
 
+    [Parameter]
+    public DateTime datanascimento { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        cargos = await _cargoService.Select();   
+        cargos = await _cargoService.Select();
+        datanascimento = DateTime.Now;
     }
 
     public async Task AdicionaFuncionario()
