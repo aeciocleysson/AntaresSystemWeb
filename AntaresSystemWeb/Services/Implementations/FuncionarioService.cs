@@ -43,9 +43,17 @@ namespace AntaresSystemWeb.Services.Implementations
             return null;
         }
 
-        public Task<List<FuncionarioViewModel>> Select()
+        public async Task<List<FuncionarioViewModel>> Select()
         {
-            throw new NotImplementedException();
+            var response = await _funcionarioRepository.Select();
+
+            return response.Select(s => new FuncionarioViewModel
+            {
+                Id = s.Id,
+                Nome = s.Nome,
+                Matricula = s.Matricula,
+                DataNascimento = s.DataNascimento
+            }).ToList();
         }
 
         public Task<FuncionarioViewModel> Select(int id)
