@@ -1,6 +1,7 @@
 ﻿using AntaresSystemWeb.Repository.Interfaces;
 using AntaresSystemWeb.Services.Interfaces;
 using AntaresSystemWeb.Util;
+using Domain.Models;
 using Domain.ViewModel;
 using FluentValidation;
 
@@ -24,9 +25,22 @@ namespace AntaresSystemWeb.Services.Implementations
             throw new NotImplementedException();
         }
 
-        public Task<FuncionarioViewModel> Insert(FuncionarioViewModel model)
+        public async Task<FuncionarioViewModel> Insert(FuncionarioViewModel model)
         {
-            throw new NotImplementedException();
+            Random randNum = new Random();
+            var startCode = randNum.Next(10, 99);
+
+            if (model is not null)
+            {
+                var funcionario = new Funcionario(nome: model.Nome,
+                                                  matricula: Convert.ToInt64($"{model.DataNascimento.ToString().Replace("/", "").Replace("00:00:00", "").Substring(0,4)}{startCode}"),
+                                                  dataNascimento: model.DataNascimento,
+                                                  cargoId: model.CargoId);
+
+                await _funcionarioRepository.Insert(funcionario);
+            }
+
+            return null;
         }
 
         public Task<List<FuncionarioViewModel>> Select()

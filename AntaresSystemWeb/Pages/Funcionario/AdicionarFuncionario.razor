@@ -17,7 +17,7 @@
         </div>
         <div class="col">
             <label for="nome">Cargo</label>
-            <select class="form-select" aria-label="Default select example">
+            <select class="form-select" aria-label="Default select example" @bind="@cargoSelected">
                 <option value="0" selected>Selecione...</option>
                 @foreach (var item in cargos)
                 {
@@ -37,19 +37,35 @@
     [Parameter]
     public DateTime datanascimento { get; set; }
 
+    int cargoSelected;
+
     protected override async Task OnInitializedAsync()
     {
         cargos = await _cargoService.Select();
         datanascimento = DateTime.Now;
     }
 
+    public void OnSelect(ChangeEventArgs e)
+    {
+        cargoSelected = Convert.ToInt32(e.Value);
+    }
+
     public async Task AdicionaFuncionario()
     {
-        var response = await _funcionarioService.Insert(funcionario);
-
-        if (response is not null)
+        if (cargoSelected != 0)
         {
-            _navigationManager.NavigateTo("/funcionarios");
+            funcionario.CargoId = cargoSelected;
+
+            var response = await _funcionarioService.Insert(funcionario);
+
+            if (response is not null)
+            {
+                _navigationManager.NavigateTo("/funcionarios");
+            }
+        }
+        else
+        {
+           
         }
     }
 }

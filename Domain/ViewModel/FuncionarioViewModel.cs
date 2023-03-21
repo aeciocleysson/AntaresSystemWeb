@@ -6,7 +6,7 @@ namespace Domain.ViewModel
     {
         public string Nome { get; set; }
         public long Matricula { get; set; }
-        public DateTime DataNascimento { get; set; }
+        public DateTime DataNascimento { get; set; } = DateTime.Now;
         public int CargoId { get; set; }
         public Cargo Cargo { get; set; }
     }
