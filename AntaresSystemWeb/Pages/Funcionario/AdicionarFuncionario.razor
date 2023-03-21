@@ -1,4 +1,5 @@
 ﻿@page "/adicionar-funcionario"
+@inject IJSRuntime JSRuntime
 
 <h3>Adicionar Funcionario</h3>
 
@@ -53,19 +54,25 @@
     public async Task AdicionaFuncionario()
     {
         if (cargoSelected != 0)
-        {
             funcionario.CargoId = cargoSelected;
-
-            var response = await _funcionarioService.Insert(funcionario);
-
-            if (response is not null)
-            {
-                _navigationManager.NavigateTo("/funcionarios");
-            }
-        }
         else
         {
-           
+            bool confirmed = await JSRuntime.InvokeAsync<bool>("alert", "Selecione um cargo.");
+            if (confirmed is false)
+                return;
+        }
+
+
+        var response = await _funcionarioService.Insert(funcionario);
+
+        if (response is not null)
+        {
+            _navigationManager.NavigateTo("/funcionarios");
+        }
+
+        else
+        {
+
         }
     }
 }

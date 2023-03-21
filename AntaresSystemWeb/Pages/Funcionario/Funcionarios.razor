@@ -11,7 +11,8 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Descrição</th>
+            <th>Nome</th>
+            <th>Cargo</th>
             <th>Opções</th>
         </tr>
     </thead>
@@ -23,6 +24,7 @@
                 <tr>
                     <td>@item.Id</td>
                     <td>@item.Nome</td>
+                    <td>@item.Cargo</td>
                     <td>
                         <a href="/editar-cargo/@item.Id" class="btn btn-warning">Editar</a>
                         <button class="btn btn-danger" @onclick="async () => await DeleteCargo(item.Id)">Deletar</button>
