@@ -1,4 +1,5 @@
-﻿using Domain.Models;
+﻿using AntaresSystemWeb.Data.Configurations;
+using Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AntaresSystemWeb.Data.Context
@@ -16,5 +17,13 @@ namespace AntaresSystemWeb.Data.Context
 
         public DbSet<Cargo> Cargo { get; set; } = default!;
         public DbSet<Funcionario> Funcionario { get; set; } = default!;
+        public DbSet<Ponto> Ponto { get; set; } = default!;
+        public DbSet<LogPonto> LogPonto { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.ApplyConfiguration(new CargoConfiguration());
+            modelBuilder.ApplyConfiguration(new FuncionarioConfiguration());
+        }
     }
 }

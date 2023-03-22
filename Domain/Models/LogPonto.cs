@@ -1,6 +1,6 @@
 ﻿namespace Domain.Models
 {
-    public class LogPonto
+    public class LogPonto : BaseModel
     {
     }
 }

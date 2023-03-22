@@ -19,7 +19,8 @@ namespace AntaresSystemWeb.Data.Configurations
 
             builder.Property(w => w.DataNascimento)
                 .IsRequired();
-            
+
+            builder.HasOne(w => w.Cargo).WithMany(w => w.Funcionarios).HasForeignKey(w => w.CargoId);
         }
     }
 }
