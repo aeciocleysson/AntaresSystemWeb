@@ -3,6 +3,7 @@ using AntaresSystemWeb.Repository.Interfaces;
 using AntaresSystemWeb.Services.Implementations;
 using AntaresSystemWeb.Services.Interfaces;
 using AntaresSystemWeb.Util;
+using Blazored.Toast;
 using Domain.Validations;
 using Domain.ViewModel;
 using FluentValidation;
@@ -26,6 +27,8 @@ namespace AntaresSystemWeb.Data.Dependencies
 
             service.AddTransient<IValidator<CargoViewModel>, CargoValidation>();
             service.AddTransient<IValidator<FuncionarioViewModel>, FuncionarioValidation>();
+
+            service.AddBlazoredToast();
 
             #endregion Validation
 

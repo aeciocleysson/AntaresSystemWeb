@@ -20,11 +20,14 @@
 
     public async Task AdicionaCargo()
     {
-        var response = await _cargoService.Insert(cargo);
-
-        if(response is not null)
+        if (cargo is not null)
         {
-            _navigationManager.NavigateTo("/cargos");
+            var response = await _cargoService.Insert(cargo);
+            if (response is not null)
+            {
+                ToastService.ShowSuccess($"Sucesso! " + "Cargo cadastrado com sucesso!");
+                _navigationManager.NavigateTo("/cargos");
+            }
         }
     }
 }

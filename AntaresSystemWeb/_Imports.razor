@@ -8,8 +8,13 @@
 @using Microsoft.JSInterop
 @using AntaresSystemWeb
 @using AntaresSystemWeb.Shared
+@using Blazored.Toast
+@using Blazored.Toast.Services
+@using Blazored.Toast.Configuration;
+@inject Blazored.Toast.Services.IToastService ToastService
 
 @using Domain.ViewModel
 @inject NavigationManager _navigationManager;
 @inject AntaresSystemWeb.Services.Interfaces.ICargoService _cargoService
 @inject AntaresSystemWeb.Services.Interfaces.IFuncionarioService _funcionarioService
+@inject IJSRuntime JSRuntime
