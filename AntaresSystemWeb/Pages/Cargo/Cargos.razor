@@ -6,31 +6,38 @@
 <a href="/adicionar-cargo" class="btn btn-info">Adicionar Cargo</a>
 <br />
 <hr />
-<table class="table table-responsive table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Descrição</th>
-            <th>Opções</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (listViewModel != null && listViewModel.Count > 0)
-        {
-            foreach (var item in listViewModel)
+@if (!listViewModel.Any())
+{
+    <Loading />
+}
+else
+{
+    <table class="table table-responsive table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Descrição</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listViewModel != null && listViewModel.Count > 0)
             {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Descricao</td>
-                    <td>
-                        <a href="/editar-cargo/@item.Id" class="btn btn-warning">Editar</a>
-                        <button class="btn btn-danger" @onclick="async () => await DeleteCargo(item.Id)">Deletar</button>
-                    </td>
-                </tr>
+                foreach (var item in listViewModel)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Descricao</td>
+                        <td>
+                            <a href="/editar-cargo/@item.Id" class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger" @onclick="async () => await DeleteCargo(item.Id)">Deletar</button>
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
 
 @code {
     List<CargoViewModel> listViewModel = new();

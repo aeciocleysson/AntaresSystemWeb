@@ -2,38 +2,47 @@
 @inject IJSRuntime JSRuntime
 
 <PageTitle>Funcionarios</PageTitle>
-<h3>Cargos</h3>
+<h3>Funcionarios</h3>
 <br />
-<a href="/adicionar-funcionario" class="btn btn-info">Adicionar Cargo</a>
+<a href="/adicionar-funcionario" class="btn btn-info">Adicionar Funcionario</a>
 <br />
 <hr />
-<table class="table table-responsive table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>Cargo</th>
-            <th>Opções</th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (listViewModel != null && listViewModel.Count > 0)
-        {
-            foreach (var item in listViewModel)
+
+@if (!listViewModel.Any())
+{
+    <Loading/>
+}
+else
+{
+    <table class="table table-responsive table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Cargo</th>
+                <th>Opções</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (listViewModel != null && listViewModel.Count > 0)
             {
-                <tr>
-                    <td>@item.Id</td>
-                    <td>@item.Nome</td>
-                    <td>@item.Cargo</td>
-                    <td>
-                        <a href="/editar-cargo/@item.Id" class="btn btn-warning">Editar</a>
-                        <button class="btn btn-danger" @onclick="async () => await DeleteCargo(item.Id)">Deletar</button>
-                    </td>
-                </tr>
+                foreach (var item in listViewModel)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Nome</td>
+                        <td>@item.Cargo</td>
+                        <td>
+                            <a href="/editar-cargo/@item.Id" class="btn btn-warning">Editar</a>
+                            <button class="btn btn-danger" @onclick="async () => await DeleteFuncionario(item.Id)">Deletar</button>
+                        </td>
+                    </tr>
+                }
             }
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+}
+
 
 @code {
     List<FuncionarioViewModel> listViewModel = new();
@@ -43,7 +52,7 @@
         listViewModel = await _funcionarioService.Select();
     }
 
-    public async Task DeleteCargo(int id)
+    public async Task DeleteFuncionario(int id)
     {
         bool confirmed = await JSRuntime.InvokeAsync<bool>("confirm", "Tem certeza que deseja deletar?");
         if (confirmed is false)

@@ -30,6 +30,7 @@
 
         if (response is not null)
         {
+            ToastService.ShowSuccess($"Sucesso! " + "Cargo atualizado com sucesso!");
             _navigationManager.NavigateTo("/cargos");
         }
     }
