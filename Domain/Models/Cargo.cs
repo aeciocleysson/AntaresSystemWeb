@@ -12,6 +12,7 @@
 
         }
         public string Descricao { get; private set; }
+        public virtual List<Funcionario> Funcionarios { get; set; } = new List<Funcionario>();
 
         public void Update(int id, string descricao)
         {
