@@ -64,12 +64,12 @@
         if (funcionario is not null)
         {
             var response = await _funcionarioService.Update(funcionario);
-            ToastService.ShowSuccess("Sucesso! " + "Funcionario cadastrado com sucesso!");
+            ToastService.ShowSuccess("Sucesso! " + "Funcionario atualizado com sucesso!");
             _navigationManager.NavigateTo("/funcionarios");
         }
         else
         {
-            ToastService.ShowError($"Alerta! " + " Erro ao cadastrar o funcionario, preencha os campos obrigatórios!");
+            ToastService.ShowError($"Alerta! " + " Erro ao atualizar o funcionario, preencha os campos obrigatórios!");
             return;
         }
     }
