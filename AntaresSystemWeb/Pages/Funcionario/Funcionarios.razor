@@ -18,6 +18,7 @@ else
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Matricula</th>
                 <th>Nome</th>
                 <th>Cargo</th>
                 <th>Opções</th>
@@ -30,10 +31,11 @@ else
                 {
                     <tr>
                         <td>@item.Id</td>
+                        <td>@item.Matricula</td>
                         <td>@item.Nome</td>
                         <td>@item.Cargo</td>
                         <td>
-                            <a href="/editar-cargo/@item.Id" class="btn btn-warning">Editar</a>
+                            <a href="/editar-funcionario/@item.Id" class="btn btn-warning">Editar</a>
                             <button class="btn btn-danger" @onclick="async () => await DeleteFuncionario(item.Id)">Deletar</button>
                         </td>
                     </tr>

@@ -14,7 +14,7 @@ namespace AntaresSystemWeb.Services.Implementations
             _user = user;
             _funcionarioRepository = funcionarioRepository;
             _validator = validator;
-            _cargoRepository = cargoRepository; 
+            _cargoRepository = cargoRepository;
         }
 
         public readonly AuthenticatedUser _user;
@@ -35,7 +35,7 @@ namespace AntaresSystemWeb.Services.Implementations
             if (model is not null)
             {
                 var funcionario = new Funcionario(nome: model.Nome,
-                                                  matricula: Convert.ToInt64($"{model.DataNascimento.ToString().Replace("/", "").Replace("00:00:00", "").Substring(0,4)}{startCode}"),
+                                                  matricula: Convert.ToInt64($"{model.DataNascimento.ToString().Replace("/", "").Replace("00:00:00", "").Substring(0, 4)}{startCode}"),
                                                   dataNascimento: model.DataNascimento,
                                                   cargoId: model.CargoId);
 
@@ -48,6 +48,7 @@ namespace AntaresSystemWeb.Services.Implementations
         public async Task<List<FuncionarioViewModel>> Select()
         {
             var response = await _funcionarioRepository.Select();
+            var cargo = await _cargoRepository.Select();
 
             return response.Select(s => new FuncionarioViewModel
             {
@@ -56,7 +57,7 @@ namespace AntaresSystemWeb.Services.Implementations
                 Matricula = s.Matricula,
                 DataNascimento = s.DataNascimento,
                 CargoId = s.CargoId,
-                Cargo = s.Cargo.Descricao
+                Cargo = cargo.Where(w => w.Id == s.CargoId).Select(x => x.Descricao).FirstOrDefault()
             }).ToList();
         }
 

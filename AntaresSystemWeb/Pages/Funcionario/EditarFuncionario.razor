@@ -1,0 +1,75 @@
+﻿@page "/editar-funcionario"
+
+<h3>Atualiuzar Funcionario</h3>
+
+<EditForm Model="funcionario" OnValidSubmit="AdicionaFuncionario">
+    <DataAnnotationsValidator />
+    <div class="row">
+        <div class="col">
+            <label for="nome">Nome</label>
+            <InputText @bind-Value="funcionario.Nome" class="form-control" id="descricao" />
+            <ValidationMessage For="() => funcionario.Nome" />
+        </div>
+        <div class="col">
+            <label for="datanascimento">Data Nascimento</label>
+            <InputDate @bind-Value="funcionario.DataNascimento" class="form-control" id="datanascimento" />
+            <ValidationMessage For="() => funcionario.DataNascimento" />
+        </div>
+        <div class="col">
+            <label for="nome">Cargo</label>
+            <select class="form-select" aria-label="Default select example" @bind="@cargoSelected">
+                <option value="0" selected>Selecione...</option>
+                @foreach (var item in cargos)
+                {
+                    <option value="@item.Id">@item.Descricao</option>
+                }
+            </select>
+        </div>
+    </div>
+    <br />
+    <button class="btn btn-success" type="submit">Salvar</button>
+</EditForm>
+
+@code {
+    FuncionarioViewModel funcionario = new();
+    List<CargoViewModel> cargos = new();
+
+    [Parameter]
+    public DateTime datanascimento { get; set; }
+
+    int cargoSelected;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cargos = await _cargoService.Select();
+        datanascimento = DateTime.Now;
+    }
+
+    public void OnSelect(ChangeEventArgs e)
+    {
+        cargoSelected = Convert.ToInt32(e.Value);
+    }
+
+    public async Task AdicionaFuncionario()
+    {
+        if (cargoSelected != 0)
+            funcionario.CargoId = cargoSelected;
+        else
+        {
+            ToastService.ShowError($"Alerta! " + " Selecione um Cargo!");
+            return;
+        }
+
+        if (funcionario is not null)
+        {
+            var response = await _funcionarioService.Insert(funcionario);
+            ToastService.ShowSuccess("Sucesso! " + "Funcionario cadastrado com sucesso!");
+            _navigationManager.NavigateTo("/funcionarios");
+        }
+        else
+        {
+            ToastService.ShowError($"Alerta! " + " Erro ao cadastrar o funcionario, preencha os campos obrigatórios!");
+            return;
+        }
+    }
+}

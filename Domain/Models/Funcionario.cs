@@ -6,7 +6,7 @@
         public long Matricula { get; private set; }
         public DateTime DataNascimento { get; private set; }
         public int CargoId { get; private set; }
-        public Cargo Cargo { get; private set; } = new Cargo();
+        public virtual Cargo Cargo { get; private set; } 
 
         public Funcionario() { }
 
