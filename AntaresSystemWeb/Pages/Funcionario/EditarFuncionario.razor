@@ -1,8 +1,8 @@
-﻿@page "/editar-funcionario"
+﻿@page "/editar-funcionario/{id}"
 
-<h3>Atualiuzar Funcionario</h3>
+<h3>Atualizar Funcionario</h3>
 
-<EditForm Model="funcionario" OnValidSubmit="AdicionaFuncionario">
+<EditForm Model="funcionario" OnValidSubmit="AtualizarFuncionario">
     <DataAnnotationsValidator />
     <div class="row">
         <div class="col">
@@ -35,14 +35,15 @@
     List<CargoViewModel> cargos = new();
 
     [Parameter]
-    public DateTime datanascimento { get; set; }
+    public string id { get; set; }
 
     int cargoSelected;
 
     protected override async Task OnInitializedAsync()
     {
         cargos = await _cargoService.Select();
-        datanascimento = DateTime.Now;
+        funcionario = await _funcionarioService.Select(Convert.ToInt32(id));
+        cargoSelected = funcionario.CargoId;
     }
 
     public void OnSelect(ChangeEventArgs e)
@@ -50,7 +51,7 @@
         cargoSelected = Convert.ToInt32(e.Value);
     }
 
-    public async Task AdicionaFuncionario()
+    public async Task AtualizarFuncionario()
     {
         if (cargoSelected != 0)
             funcionario.CargoId = cargoSelected;
@@ -62,7 +63,7 @@
 
         if (funcionario is not null)
         {
-            var response = await _funcionarioService.Insert(funcionario);
+            var response = await _funcionarioService.Update(funcionario);
             ToastService.ShowSuccess("Sucesso! " + "Funcionario cadastrado com sucesso!");
             _navigationManager.NavigateTo("/funcionarios");
         }
