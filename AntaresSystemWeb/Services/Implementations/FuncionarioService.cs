@@ -14,7 +14,7 @@ namespace AntaresSystemWeb.Services.Implementations
             _user = user;
             _funcionarioRepository = funcionarioRepository;
             _validator = validator;
-            _cargoRepository = cargoRepository; 
+            _cargoRepository = cargoRepository;
         }
 
         public readonly AuthenticatedUser _user;
@@ -32,22 +32,44 @@ namespace AntaresSystemWeb.Services.Implementations
             Random randNum = new Random();
             var startCode = randNum.Next(10, 99);
 
-            if (model is not null)
+            var valid = _validator.Validate(model);
+            var cargo = await _cargoRepository.Select();
+            if (valid.IsValid)
             {
                 var funcionario = new Funcionario(nome: model.Nome,
-                                                  matricula: Convert.ToInt64($"{model.DataNascimento.ToString().Replace("/", "").Replace("00:00:00", "").Substring(0,4)}{startCode}"),
+                                                  matricula: Convert.ToInt64($"{model.DataNascimento.ToString().Replace("/", "").Replace("00:00:00", "").Substring(0, 4)}{startCode}"),
                                                   dataNascimento: model.DataNascimento,
                                                   cargoId: model.CargoId);
 
-                await _funcionarioRepository.Insert(funcionario);
-            }
+                var response = await _funcionarioRepository.Insert(funcionario);
 
-            return null;
+                if (response is not null)
+                {
+                    var result = new FuncionarioViewModel
+                    {
+                        Id = response.Id,
+                        Nome = response.Nome,
+                        DataNascimento = response.DataNascimento,
+                        Matricula = response.Matricula,
+                        CargoId = response.CargoId,
+                        Cargo = cargo.Where(w => w.Id == response.CargoId).Select(x => x.Descricao).FirstOrDefault()
+                    };
+
+                    return result;
+                }
+                else
+                    return null;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
 
         public async Task<List<FuncionarioViewModel>> Select()
         {
             var response = await _funcionarioRepository.Select();
+            var cargo = await _cargoRepository.Select();
 
             return response.Select(s => new FuncionarioViewModel
             {
@@ -56,18 +78,62 @@ namespace AntaresSystemWeb.Services.Implementations
                 Matricula = s.Matricula,
                 DataNascimento = s.DataNascimento,
                 CargoId = s.CargoId,
-                Cargo = s.Cargo.Descricao
+                Cargo = cargo.Where(w => w.Id == s.CargoId).Select(x => x.Descricao).FirstOrDefault()
             }).ToList();
         }
 
-        public Task<FuncionarioViewModel> Select(int id)
+        public async Task<FuncionarioViewModel> Select(int id)
         {
-            throw new NotImplementedException();
+            var response = await _funcionarioRepository.Select(id);
+
+            var result = new FuncionarioViewModel
+            {
+                Id = response.Id,
+                Nome = response.Nome,
+                Matricula = response.Matricula,
+                DataNascimento = response.DataNascimento,
+                CargoId = response.CargoId
+            };
+
+            return result;
         }
 
-        public Task<FuncionarioViewModel> Update(FuncionarioViewModel model)
+        public async Task<FuncionarioViewModel> Update(FuncionarioViewModel model)
         {
-            throw new NotImplementedException();
+            var valid = _validator.Validate(model);
+            var cargo = await _cargoRepository.Select();
+            if (valid.IsValid)
+            {
+                var funcionario = await _funcionarioRepository.Select(model.Id);
+
+                funcionario.Update(id: model.Id,
+                                   nome: model.Nome,
+                                   dataNascimento: model.DataNascimento,
+                                   cargoId: model.CargoId);
+
+                var response = await _funcionarioRepository.Update(funcionario);
+
+                if (response is not null)
+                {
+                    var result = new FuncionarioViewModel
+                    {
+                        Id = response.Id,
+                        Nome = response.Nome,
+                        DataNascimento = response.DataNascimento,
+                        Matricula = response.Matricula,
+                        CargoId = response.CargoId,
+                        Cargo = cargo.Where(w => w.Id == response.CargoId).Select(x => x.Descricao).FirstOrDefault()
+                    };
+
+                    return result;
+                }
+                else
+                    return null;
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
     }
 }

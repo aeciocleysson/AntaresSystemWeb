@@ -6,7 +6,7 @@
         public long Matricula { get; private set; }
         public DateTime DataNascimento { get; private set; }
         public int CargoId { get; private set; }
-        public Cargo Cargo { get; private set; } = new Cargo();
+        public virtual Cargo Cargo { get; private set; } 
 
         public Funcionario() { }
 
@@ -18,10 +18,10 @@
             CargoId = cargoId;
         }
 
-        public void Update(string nome, long matricula, DateTime dataNascimento, int cargoId)
+        public void Update(int id,string nome, DateTime dataNascimento, int cargoId)
         {
+            Id = id;
             Nome = nome;
-            Matricula = matricula;
             DataNascimento = dataNascimento;
             CargoId = cargoId;
         }
