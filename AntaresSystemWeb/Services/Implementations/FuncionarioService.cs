@@ -51,7 +51,6 @@ namespace AntaresSystemWeb.Services.Implementations
                                                   cargoId: model.CargoId,
                                                   userInserted: _user.Id.ToString());
 
-
                 var response = await _funcionarioRepository.Insert(funcionario);
 
                 if (response is not null)
