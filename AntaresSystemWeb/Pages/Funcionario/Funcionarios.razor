@@ -60,7 +60,7 @@ else
         if (confirmed is false)
             return;
 
-        await _cargoService.Delete(id);
+        await _funcionarioService.Delete(id);
 
         listViewModel = await _funcionarioService.Select();
     }

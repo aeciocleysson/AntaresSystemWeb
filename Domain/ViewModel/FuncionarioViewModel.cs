@@ -9,7 +9,7 @@ namespace Domain.ViewModel
         [MinLength(3, ErrorMessage = "Nome deve ter no minimo 3 caracteres.")]
         [MaxLength(40, ErrorMessage = "Nome deve ter no maximo 40 caracteres.")]
         public string Nome { get; set; }
-        public long Matricula { get; set; }
+        public string Matricula { get; set; }
         public DateTime DataNascimento { get; set; } = DateTime.Now;
         public int CargoId { get; set; }
         public string Cargo { get; set; }

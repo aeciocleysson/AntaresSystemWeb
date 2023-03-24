@@ -15,6 +15,7 @@ namespace AntaresSystemWeb.Data.Configurations
                 .HasColumnType("varchar(50)");
 
             builder.Property(w => w.Matricula)
+                .HasColumnType("varchar(10)")
                 .IsRequired();
 
             builder.Property(w => w.DataNascimento)

@@ -21,10 +21,19 @@ namespace AntaresSystemWeb.Services.Implementations
         private readonly IFuncionarioRepository _funcionarioRepository;
         private readonly ICargoRepository _cargoRepository;
         private IValidator<FuncionarioViewModel> _validator;
-
-        public Task Delete(int id)
+        
+        public async Task Delete(int id)
         {
-            throw new NotImplementedException();
+            if (id != 0)
+            {
+                var funcionario = await _funcionarioRepository.Select(id);
+                funcionario.UserAlteration = _user.Id.ToString();
+                await _funcionarioRepository.Delete(funcionario);
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
 
         public async Task<FuncionarioViewModel> Insert(FuncionarioViewModel model)
@@ -37,9 +46,11 @@ namespace AntaresSystemWeb.Services.Implementations
             if (valid.IsValid)
             {
                 var funcionario = new Funcionario(nome: model.Nome,
-                                                  matricula: Convert.ToInt64($"{model.DataNascimento.ToString().Replace("/", "").Replace("00:00:00", "").Substring(0, 4)}{startCode}"),
+                                                  matricula: $"{model.DataNascimento.ToString().Replace("/", "").Replace("00:00:00", "").Substring(0, 4)}{startCode}",
                                                   dataNascimento: model.DataNascimento,
-                                                  cargoId: model.CargoId);
+                                                  cargoId: model.CargoId,
+                                                  userInserted: _user.Id.ToString());
+
 
                 var response = await _funcionarioRepository.Insert(funcionario);
 
@@ -109,7 +120,8 @@ namespace AntaresSystemWeb.Services.Implementations
                 funcionario.Update(id: model.Id,
                                    nome: model.Nome,
                                    dataNascimento: model.DataNascimento,
-                                   cargoId: model.CargoId);
+                                   cargoId: model.CargoId,
+                                   userAlteration: _user.Id.ToString());
 
                 var response = await _funcionarioRepository.Update(funcionario);
 
