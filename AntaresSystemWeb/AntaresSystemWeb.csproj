@@ -10,10 +10,6 @@
 
   <ItemGroup>
     <PackageReference Include="Blazored.Toast" Version="4.1.0" />
-    <PackageReference Include="C1.Blazor.DataPager" Version="6.0.20231.491" />
-    <PackageReference Include="C1.Blazor.Grid" Version="6.0.20231.491" />
-    <PackageReference Include="C1.Blazor.Input" Version="6.0.20231.491" />
-    <PackageReference Include="C1.Blazor.ListView" Version="6.0.20231.491" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.14" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.14" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.15" />
