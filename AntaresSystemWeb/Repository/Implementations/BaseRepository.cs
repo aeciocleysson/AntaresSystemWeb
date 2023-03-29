@@ -1,5 +1,5 @@
-﻿using AntaresSystemWeb.Repository.Interfaces;
-using Domain.Models;
+﻿using AntaresLibary.Models;
+using AntaresSystemWeb.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace AntaresSystemWeb.Repository.Implementations

@@ -1,11 +1,11 @@
-﻿using AntaresSystemWeb.Repository.Implementations;
+﻿using AntaresLibary.Validations;
+using AntaresLibary.ViewModel;
+using AntaresSystemWeb.Repository.Implementations;
 using AntaresSystemWeb.Repository.Interfaces;
 using AntaresSystemWeb.Services.Implementations;
 using AntaresSystemWeb.Services.Interfaces;
 using AntaresSystemWeb.Util;
 using Blazored.Toast;
-using Domain.Validations;
-using Domain.ViewModel;
 using FluentValidation;
 
 namespace AntaresSystemWeb.Data.Dependencies

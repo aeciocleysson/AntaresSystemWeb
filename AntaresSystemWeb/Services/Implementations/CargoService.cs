@@ -1,8 +1,8 @@
-﻿using AntaresSystemWeb.Repository.Interfaces;
+﻿using AntaresLibary.Models;
+using AntaresLibary.ViewModel;
+using AntaresSystemWeb.Repository.Interfaces;
 using AntaresSystemWeb.Services.Interfaces;
 using AntaresSystemWeb.Util;
-using Domain.Models;
-using Domain.ViewModel;
 using FluentValidation;
 
 namespace AntaresSystemWeb.Services.Implementations

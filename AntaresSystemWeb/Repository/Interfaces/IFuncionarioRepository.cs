@@ -1,5 +1,5 @@
-﻿using AntaresSystemWeb.Data.Context;
-using Domain.Models;
+﻿using AntaresLibary.Models;
+using AntaresSystemWeb.Data.Context;
 
 namespace AntaresSystemWeb.Repository.Interfaces
 {

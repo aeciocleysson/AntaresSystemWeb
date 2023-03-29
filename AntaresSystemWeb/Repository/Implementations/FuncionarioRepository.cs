@@ -1,6 +1,6 @@
-﻿using AntaresSystemWeb.Data.Context;
+﻿using AntaresLibary.Models;
+using AntaresSystemWeb.Data.Context;
 using AntaresSystemWeb.Repository.Interfaces;
-using Domain.Models;
 
 namespace AntaresSystemWeb.Repository.Implementations
 {

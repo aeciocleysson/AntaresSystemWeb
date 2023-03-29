@@ -1,4 +1,4 @@
-﻿using Domain.ViewModel;
+﻿using AntaresLibary.ViewModel;
 
 namespace AntaresSystemWeb.Services.Interfaces
 {

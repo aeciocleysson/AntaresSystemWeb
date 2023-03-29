@@ -1,8 +1,8 @@
-﻿using AntaresSystemWeb.Repository.Interfaces;
+﻿using AntaresLibary.Models;
+using AntaresLibary.ViewModel;
+using AntaresSystemWeb.Repository.Interfaces;
 using AntaresSystemWeb.Services.Interfaces;
 using AntaresSystemWeb.Util;
-using Domain.Models;
-using Domain.ViewModel;
 using FluentValidation;
 
 namespace AntaresSystemWeb.Services.Implementations
@@ -21,7 +21,7 @@ namespace AntaresSystemWeb.Services.Implementations
         private readonly IFuncionarioRepository _funcionarioRepository;
         private readonly ICargoRepository _cargoRepository;
         private IValidator<FuncionarioViewModel> _validator;
-        
+
         public async Task Delete(int id)
         {
             if (id != 0)

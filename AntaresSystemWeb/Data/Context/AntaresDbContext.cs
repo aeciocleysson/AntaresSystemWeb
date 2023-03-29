@@ -1,5 +1,5 @@
-﻿using AntaresSystemWeb.Data.Configurations;
-using Domain.Models;
+﻿using AntaresLibary.Models;
+using AntaresSystemWeb.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace AntaresSystemWeb.Data.Context
@@ -12,7 +12,6 @@ namespace AntaresSystemWeb.Data.Context
 
         public AntaresDbContext()
         {
-
         }
 
         public DbSet<Cargo> Cargo { get; set; } = default!;
