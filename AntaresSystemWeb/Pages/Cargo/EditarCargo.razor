@@ -17,7 +17,7 @@
     CargoViewModel cargo = new();
 
     [Parameter]
-    public string id { get; set; }
+    public string id { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {

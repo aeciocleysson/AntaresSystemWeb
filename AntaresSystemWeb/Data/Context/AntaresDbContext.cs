@@ -17,7 +17,6 @@ namespace AntaresSystemWeb.Data.Context
         public DbSet<Cargo> Cargo { get; set; } = default!;
         public DbSet<Funcionario> Funcionario { get; set; } = default!;
         public DbSet<Ponto> Ponto { get; set; } = default!;
-        public DbSet<LogPonto> LogPonto { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

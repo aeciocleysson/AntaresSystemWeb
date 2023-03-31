@@ -4,6 +4,7 @@ using AntaresSystemWeb.Data.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AntaresSystemWeb.Migrations.AntaresDb
 {
     [DbContext(typeof(AntaresDbContext))]
-    partial class AntaresDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230331033433_v1..5")]
+    partial class v15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
