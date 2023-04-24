@@ -7,14 +7,11 @@ using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DbAntaresIdentityContextConnection") ?? throw new InvalidOperationException("Connection string 'DbAntaresIdentityContextConnection' not found.");
 
-builder.Services.AddDbContext<DbAntaresIdentityContext>(options =>
-    options.UseSqlServer(connectionString));
+builder.Services.AddDbContext<DbAntaresIdentityContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddDbContext<AntaresDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbAntaresContextConnection")));
+builder.Services.AddDbContext<AntaresDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DbAntaresContextConnection")), ServiceLifetime.Scoped);
 
-builder.Services.AddDefaultIdentity<AntaresSystemUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<DbAntaresIdentityContext>();
+builder.Services.AddDefaultIdentity<AntaresSystemUser>(options => options.SignIn.RequireConfirmedAccount = true).AddEntityFrameworkStores<DbAntaresIdentityContext>();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -43,6 +40,5 @@ app.UseAuthorization();
 
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
-app.UseAuthentication(); ;
 
 app.Run();
